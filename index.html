@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- TODO: Set the document title to the name of your application -->
+    <title>Lovable App</title>
+    <meta name="description" content="Lovable Generated Project" />
+    <meta name="author" content="Lovable" />
+
+    <!-- TODO: Update og:title to match your application name -->
+    <meta property="og:title" content="Lovable App" />
+    <meta property="og:description" content="Lovable Generated Project" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Lovable" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script>
+      // Minimal error overlay to surface runtime errors to the browser
+      (function () {
+        function renderOverlay(msg) {
+          try {
+            var existing = document.getElementById('__error_overlay__');
+            if (existing) existing.remove();
+            var div = document.createElement('div');
+            div.id = '__error_overlay__';
+            div.style.position = 'fixed';
+            div.style.left = '0';
+            div.style.top = '0';
+            div.style.right = '0';
+            div.style.background = 'rgba(20,20,20,0.95)';
+            div.style.color = 'white';
+            div.style.padding = '16px';
+            div.style.zIndex = '999999';
+            div.style.fontFamily = 'monospace';
+            div.style.whiteSpace = 'pre-wrap';
+            div.innerText = msg;
+            var btn = document.createElement('button');
+            btn.innerText = 'Dismiss';
+            btn.style.marginLeft = '12px';
+            btn.onclick = function () { div.remove(); };
+            div.appendChild(btn);
+            document.body.appendChild(div);
+          } catch (e) {
+            // ignore
+          }
+        }
+
+        window.addEventListener('error', function (e) {
+          renderOverlay('Error: ' + (e.error && e.error.stack ? e.error.stack : e.message));
+        });
+        window.addEventListener('unhandledrejection', function (e) {
+          renderOverlay('Unhandled Rejection: ' + (e.reason && e.reason.stack ? e.reason.stack : String(e.reason)));
+        });
+        window.onerror = function (msg, url, line, col, err) {
+          renderOverlay('Error: ' + (err && err.stack ? err.stack : msg + ' at ' + url + ':' + line + ':' + col));
+        };
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
