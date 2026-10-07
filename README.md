@@ -6,6 +6,11 @@ A React dashboard for viewing demand trends, SKU forecasts, replenishment inform
 
 The frontend provides five routed views: Overview, Live Trends, Demand Forecast, Purchase Orders, and Settings. Trend, SKU mapping, social signal, and forecast data are requested from the FastAPI backend. Purchase Orders currently uses local sample data.
 
+## Live Demo
+
+**Frontend:** https://sensing-engine-frontend-psi.vercel.app/  
+**API Documentation:** https://sensing-engine-backend-amber.vercel.app/docs
+
 ## Features
 
 - Overview of trend-linked SKU metrics, social-signal alerts, and forecast revenue metrics.
