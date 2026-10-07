@@ -1,51 +1,84 @@
-## **2️⃣ Frontend README (`Sensing Engine/demand_dashboard/README.md`)**
+# Sensing Engine Frontend
 
-```markdown
-# Sensing Engine - Frontend
+A React dashboard for viewing demand trends, SKU forecasts, replenishment information, and dashboard settings.
 
-## Description
-This is the frontend of the **Sensing Engine** project built with **React + Vite + TypeScript**.  
-It provides a dashboard interface for demand forecasting, trends, and analytics.
+## Overview
 
-## Folder Structure
-demand_dashboard/
-│
+The frontend provides five routed views: Overview, Live Trends, Demand Forecast, Purchase Orders, and Settings. Trend, SKU mapping, social signal, and forecast data are requested from the FastAPI backend. Purchase Orders currently uses local sample data.
+
+## Features
+
+- Overview of trend-linked SKU metrics, social-signal alerts, and forecast revenue metrics.
+- Live Trends view with keyword and source summaries, social posts, and signal polling every 30 seconds.
+- Demand Forecast view with SKU and 7-, 14-, or 30-day horizon selection, forecast chart, and prediction table.
+- Purchase Orders view with status filters and local sample orders.
+- Dashboard theme toggle and settings controls.
+
+## Technology
+
+- React 18 and TypeScript
+- Vite and SWC
+- React Router and TanStack React Query
+- Tailwind CSS
+- Recharts
+- Radix UI components and Lucide icons
+
+## Project structure
+
+```text
+sensing-engine-frontend/
+├── public/
+│   └── Static assets
 ├── src/
-│ ├── api/ # API calls
-│ ├── components/ # Reusable React components
-│ ├── hooks/ # Custom React hooks
-│ ├── lib/ # Utility functions
-│ ├── pages/ # Page components
-│ ├── App.tsx
-│ ├── main.tsx
-│ └── ...other files
-├── public/ # Static assets
-├── package.json # Project configuration
-├── tsconfig.json # TypeScript configuration
-├── .env.example # Example environment variables
-└── README.md
+│   ├── components/
+│   │   ├── dashboard/    Dashboard charts, tables, and cards
+│   │   ├── layout/       Shared dashboard layout and navigation
+│   │   └── ui/           Reusable interface components
+│   ├── hooks/             Forecast, theme, and UI hooks
+│   ├── lib/               API client, response types, mock data, and utilities
+│   ├── pages/             Routed application views
+│   ├── App.tsx            Providers and routes
+│   └── main.tsx           Application entry point
+├── index.html
+├── package.json
+├── tailwind.config.ts
+├── tsconfig.json
+└── vite.config.ts
+```
 
+## Local setup
 
-## Installation
+Install dependencies from the frontend repository root:
 
-1. **Install Node.js dependencies:**
-```bash
+```sh
 npm install
-Run the development server:
+```
 
+The API client reads the Vite environment variable `VITE_API_BASE`. It defaults to `http://localhost:8000` when the variable is not set. To use another backend, set `VITE_API_BASE` in a local `.env` file to the backend base URL, without the `/api` suffix. Keep local environment files out of source control.
+
+Start the development server:
+
+```sh
 npm run dev
-Server will start on http://localhost:5173 (or another port if specified)
+```
 
-Environment Variables
-Rename .env.example to .env and provide real API URL:
+Vite is configured to serve on port `8080`. The FastAPI backend must be running at the configured API base for backend data to load.
 
-VITE_API_URL=http://localhost:8000
-This points the frontend to the backend server.
+## Backend API
 
-Notes
-node_modules/ and dist/ are ignored in version control.
+API routes use the `/api` prefix. The frontend requests:
 
-Build for production:
+- `GET /api/trends`
+- `GET /api/sku-mapping`
+- `GET /api/forecast` with `sku`, `horizon`, and optionally `region` and `start_date`
+- `GET /api/social`
+- `GET /api/trends/signals`
+- `GET /api/historic` with `sku`
 
-npm run build
-After build, the dist/ folder can be deployed to any static hosting.
+The current backend registers the trends, SKU mapping, social, signals, and forecast routes. It does not register `/api/historic`; the Demand Forecast view can use historical points included in the forecast response when available.
+
+## Current limitations
+
+- Purchase Orders are local sample data and are not loaded from a backend endpoint.
+- Forecast confidence labels, trend values, stockout estimates, or aggregate expected units may be unavailable depending on the API response; the interface displays unavailable values rather than generating replacements.
+- Email, push, SMS, digest, and regional settings are UI controls; the current frontend does not connect them to a backend.

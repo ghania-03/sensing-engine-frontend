@@ -78,8 +78,7 @@ export type ForecastRequestParams = {
   start_date?: string;
 };
 
-const env: any = import.meta.env || {};
-const base = env.VITE_API_BASE || env.REACT_APP_API_BASE || "http://localhost:8000";
+const base = import.meta.env.VITE_API_BASE || "http://localhost:8000";
 
 export const fetchJson = async (path: string) => {
   const res = await fetch(base + path);
@@ -90,7 +89,7 @@ export const fetchJson = async (path: string) => {
   return res.json();
 };
 
-export const fetchForecast = (params: ForecastRequestParams) => {
+export const fetchForecast = (params: ForecastRequestParams): Promise<ForecastResponse> => {
   const { sku, horizon, region, start_date } = params;
   const qs = new URLSearchParams();
   qs.set("sku", sku);
