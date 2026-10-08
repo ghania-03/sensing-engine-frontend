@@ -8,8 +8,9 @@ The frontend provides five routed views: Overview, Live Trends, Demand Forecast,
 
 ## Live Demo
 
-**Frontend:** https://sensing-engine-frontend-psi.vercel.app/  
-**API Documentation:** https://sensing-engine-backend-amber.vercel.app/docs
+**Frontend:** [View](https://sensing-engine-frontend-psi.vercel.app/ ) 
+
+**API Documentation:**  [View](https://sensing-engine-backend-amber.vercel.app/docs) 
 
 ## Features
 
